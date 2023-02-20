@@ -1,5 +1,8 @@
 import tkinter as tk
+from tkinter import messagebox
 import random
+
+global my_new_password
 
 
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
@@ -21,12 +24,27 @@ def generate_password():
                 end = False
 
     my_new_password = ' '.join(new_password)
-    print(my_new_password)
-    return
+    # print(my_new_password)
+    # new_pass_windows = tk.messagebox()
 
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 def save_password():
+    temp_password = password_entry.get()
+    temp_url = url_entry.get()
+    temp_user = email_or_user_entry.get()
+    print(temp_password)
+    is_okay_to_save = messagebox.askokcancel(title=temp_url,
+                                             message=f"{temp_url}\n{temp_user}\n{temp_password}\nSave to file ? ")
+    # print(my_new_password)
+    if is_okay_to_save:
+        with open("password_list.txt", 'a+') as file:
+            file.write(f"{temp_url} | {temp_user} | {temp_password}\n")
+            file.close()
+        password_entry.delete(0, 'end')
+        url_entry.delete(0, 'end')
+        email_or_user_entry.delete(0, 'end')
+
     return
 
 
@@ -44,6 +62,7 @@ url = tk.Label(text="Website: ")
 url.grid(row=1, column=0)
 url_entry = tk.Entry(bg="white", borderwidth=2, width=35)
 url_entry.grid(row=1, column=1, columnspan=2)
+url_entry.insert(0, "www.amazon.com")
 
 email_or_user = tk.Label(text="Email/Username: ")
 email_or_user.grid(row=2, column=0)
