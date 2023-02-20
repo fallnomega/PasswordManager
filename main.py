@@ -50,6 +50,7 @@ def save_password():
 
 # ---------------------------- UI SETUP ------------------------------- #
 
+
 window = tk.Tk()
 window.title = "Password Manager"
 window_background = tk.PhotoImage(file="logo.png")
