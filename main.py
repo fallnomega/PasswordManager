@@ -23,7 +23,10 @@ def generate_password():
             if len(new_password) == total_char:
                 end = False
 
-    my_new_password = ' '.join(new_password)
+    my_new_password = ''.join(new_password)
+    password_entry.delete(0, 'end')
+
+    password_entry.insert(0,my_new_password)
     # print(my_new_password)
     # new_pass_windows = tk.messagebox()
 
@@ -33,19 +36,22 @@ def save_password():
     temp_password = password_entry.get()
     temp_url = url_entry.get()
     temp_user = email_or_user_entry.get()
-    print(temp_password)
-    is_okay_to_save = messagebox.askokcancel(title=temp_url,
-                                             message=f"{temp_url}\n{temp_user}\n{temp_password}\nSave to file ? ")
-    # print(my_new_password)
-    if is_okay_to_save:
-        with open("password_list.txt", 'a+') as file:
-            file.write(f"{temp_url} | {temp_user} | {temp_password}\n")
-            file.close()
-        password_entry.delete(0, 'end')
-        url_entry.delete(0, 'end')
-        email_or_user_entry.delete(0, 'end')
+    if len(temp_password) == 0 or len(temp_user) == 0 or len(temp_url) == 0:
+        messagebox.showerror(title="Error",
+                               message=f"These fields should no be blank")
+    else:
+        print(temp_password)
+        is_okay_to_save = messagebox.askokcancel(title=temp_url,
+                                                 message=f"{temp_url}\n{temp_user}\n{temp_password}\nSave to file ? ")
+        # print(my_new_password)
+        if is_okay_to_save:
+            with open("password_list.txt", 'a+') as file:
+                file.write(f"{temp_url} | {temp_user} | {temp_password}\n")
+                file.close()
+            password_entry.delete(0, 'end')
+            url_entry.delete(0, 'end')
+            email_or_user_entry.delete(0, 'end')
 
-    return
 
 
 # ---------------------------- UI SETUP ------------------------------- #
